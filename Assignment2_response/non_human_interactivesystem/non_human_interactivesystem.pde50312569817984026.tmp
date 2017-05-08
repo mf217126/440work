@@ -1,0 +1,89 @@
+Runners[] runners;
+int runnerCnt = 2;
+int tempCnt = 0;
+int cnt = 3;
+
+Runners runner1;
+Runners runner2;
+
+
+void setup(){
+  size(500,500);
+  background(55,0,15);
+  runners = new Runners[cnt];
+  
+  for( int i = 0; i < runnerCnt; i++ ){
+    runners[i] = new Runners(random(0,width),random(0,height), 2, false);
+  }
+  //color[] colors = new color[4];    
+  //colors[0] = color(10,40,200);
+  //colors[1] = color(30,200,10);
+  //colors[2] = color(200,50,30);
+  //colors[3] = color(200,200,12);
+  
+  
+
+
+  
+  //runner1 = new Runners(random(0,width),random(0,height), 2);
+  //runner2 = new Runners(random(0,width),random(0,height), 2);
+
+  
+}
+void draw(){
+  
+  for (int i=0; i<250; i++){
+    float x = random(width);
+    float y = random(height);
+    fill(55,0,15);
+    stroke(50, 0, 10);
+    strokeWeight(1);
+    ellipse(x,y,4,4);
+  }
+
+  for( int j=0; j<runnerCnt; j++ ){
+   runners[j].run(); 
+  }
+  
+  tempCnt = runnerCnt;
+  
+  for (int k = 0; k < runnerCnt; k++){
+       runner1 = runners[k];
+
+       for(int r = k+1; r<runnerCnt; r++){
+         runner2 = runners[r];
+         
+          println("number" + k + " " + r + " " + runnerCnt);
+         
+         if (abs(runner1.y - runner2.y)<40 && abs(runner1.x - runner2.x)<40 && runner1.cancreate() && runner2.cancreate() ){
+        //    runners = new Runners[cnt];
+            if (tempCnt < runners.length){
+                //runner1.m = -1;
+                //runner2.m = -1;
+                runners[runnerCnt] = new Runners(runner1.y, runner2.x, 2, false);
+                
+                
+            
+         //   runners[runnerCnt].run();
+                tempCnt++;
+
+                //println(runnerCnt);
+                //println(runners[0].m());
+                
+                
+                cnt ++;
+                
+              runner1.timeout();
+              runner2.timeout();
+                
+              runnerCnt = tempCnt;
+          }
+       }
+    }
+
+  }
+ 
+
+     
+
+}
